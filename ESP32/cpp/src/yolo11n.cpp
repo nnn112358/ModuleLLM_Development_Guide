@@ -122,8 +122,8 @@ void setup_camera(void)
 void setup_comm(void)
 {
     Serial.begin(115200);
-    Serial2.begin(1500000, SERIAL_8N1, 18, 17);
     Serial2.setRxBufferSize(2048);
+    Serial2.begin(1500000, SERIAL_8N1, 18, 17);
 }
 
 void setup_llm(void)
