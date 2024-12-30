@@ -1,0 +1,5 @@
+socket
+json
+base64
+opencv-python
+numpy
