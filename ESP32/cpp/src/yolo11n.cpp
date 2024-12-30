@@ -80,11 +80,11 @@ struct yolo_box_t {
     KeyPoint keypoint;
 };
 
-
 static constexpr std::size_t box_count = 5;
 static box_t box_list[box_count];
 static yolo_box_t yolo_box;
 static yolo_box_t boxes[17];
+static float masks[32];
 static bool state;
 static M5ModuleLLM module_llm;
 // static String camera_work_id;
@@ -368,6 +368,14 @@ void parseJson(const char* jsonString)
                     boxes[i].keypoint.x = kps[i * 3].as<float>();
                     boxes[i].keypoint.y = kps[i * 3 + 1].as<float>();
                     boxes[i].keypoint.c = kps[i * 3 + 2].as<float>();
+                }
+            }
+
+            JsonArray mask = result["mask"].as<JsonArray>();
+
+            if (kps.size() == 32) {
+                for (int i = 0; i < 32; ++i) {
+                    masks[i] = mask[i].as<float>();
                 }
             }
         }
