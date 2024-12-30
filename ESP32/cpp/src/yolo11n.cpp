@@ -63,6 +63,12 @@ struct box_t {
     }
 };
 
+struct KeyPoint {
+    float x;
+    float y;
+    float c;
+};
+
 struct yolo_box_t {
     String class_name;
     float confidence;
@@ -71,11 +77,14 @@ struct yolo_box_t {
     int x2;
     int y2;
     int frame;
+    KeyPoint keypoint;
 };
+
 
 static constexpr std::size_t box_count = 5;
 static box_t box_list[box_count];
 static yolo_box_t yolo_box;
+static yolo_box_t boxes[17];
 static bool state;
 static M5ModuleLLM module_llm;
 // static String camera_work_id;
@@ -351,6 +360,16 @@ void parseJson(const char* jsonString)
                 yolo_box.x2    = bboxArray[2].as<int>();
                 yolo_box.y2    = bboxArray[3].as<int>();
             }
+
+            JsonArray kps = result["kps"].as<JsonArray>();
+
+            if (kps.size() == 51) {
+                for (int i = 0; i < 17; ++i) {
+                    boxes[i].keypoint.x = kps[i * 3].as<float>();
+                    boxes[i].keypoint.y = kps[i * 3 + 1].as<float>();
+                    boxes[i].keypoint.c = kps[i * 3 + 2].as<float>();
+                }
+            }
         }
     }
 }
@@ -418,9 +437,9 @@ void cameraTask(void* pvParameters)
 void setup_task(void)
 {
     mutex = xSemaphoreCreateMutex();
-    xTaskCreatePinnedToCore(recvTask, "Receive Task", 4096, NULL, 3, NULL, 1);
+    xTaskCreatePinnedToCore(recvTask, "Receive Task", 8192, NULL, 3, NULL, 1);
     xTaskCreatePinnedToCore(cameraTask, "Camera Task", 8192, NULL, 2, NULL, 0);
-    xTaskCreatePinnedToCore(menuTask, "Menu Task", 2048, NULL, 1, NULL, 1);
+    xTaskCreatePinnedToCore(menuTask, "Menu Task", 4096, NULL, 1, NULL, 1);
     // xTaskCreatePinnedToCore(menuBackTask, "Menu Back Task", 2048, NULL, 0, NULL, 1);
 }
 
