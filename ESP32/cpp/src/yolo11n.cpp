@@ -72,10 +72,10 @@ struct KeyPoint {
 struct yolo_box_t {
     String class_name;
     float confidence;
-    int x1;
-    int y1;
-    int x2;
-    int y2;
+    float x1;
+    float y1;
+    float x2;
+    float y2;
     int frame;
     KeyPoint keypoint;
 };
@@ -83,7 +83,8 @@ struct yolo_box_t {
 static constexpr std::size_t box_count = 5;
 static box_t box_list[box_count];
 static yolo_box_t yolo_box;
-static yolo_box_t boxes[17];
+static yolo_box_t pose_boxes[17];
+static yolo_box_t hand_boxes[21];
 static float masks[32];
 static bool state;
 static M5ModuleLLM module_llm;
@@ -206,7 +207,7 @@ void setup_yolo_hand(void)
     M5.Display.drawString("setup_yolo_hand..", CoreS3.Display.width() / 2, CoreS3.Display.height() / 2);
     m5_module_llm::ApiYoloSetupConfig_t yolo_config;
     yolo_config.input = {"yolo.jpeg.base64"};
-    yolo_config.model = "yolo11n-hand";
+    yolo_config.model = "yolo11n-hand-pose";
     yolo_work_id      = module_llm.yolo.setup(yolo_config, "yolo_setup");
     while (yolo_work_id == nullptr) vTaskDelay(100);
     M5.Display.fillRect(0, (CoreS3.Display.height() / 2) - 10, 320, 25, WHITE);
@@ -355,19 +356,31 @@ void parseJson(const char* jsonString)
 
             if (bboxArray.size() == 4) {
                 yolo_box.frame = 2;
-                yolo_box.x1    = bboxArray[0].as<int>();
-                yolo_box.y1    = bboxArray[1].as<int>();
-                yolo_box.x2    = bboxArray[2].as<int>();
-                yolo_box.y2    = bboxArray[3].as<int>();
+                yolo_box.x1    = bboxArray[0].as<float>();
+                yolo_box.y1    = bboxArray[1].as<float>();
+                yolo_box.x2    = bboxArray[2].as<float>();
+                yolo_box.y2    = bboxArray[3].as<float>();
             }
 
             JsonArray kps = result["kps"].as<JsonArray>();
 
-            if (kps.size() == 51) {
-                for (int i = 0; i < 17; ++i) {
-                    boxes[i].keypoint.x = kps[i * 3].as<float>();
-                    boxes[i].keypoint.y = kps[i * 3 + 1].as<float>();
-                    boxes[i].keypoint.c = kps[i * 3 + 2].as<float>();
+            if (yolo_box.class_name == "person") {
+                if (kps.size() == 51) {
+                    for (int i = 0; i < 17; ++i) {
+                        pose_boxes[i].keypoint.x = kps[i * 3].as<float>();
+                        pose_boxes[i].keypoint.y = kps[i * 3 + 1].as<float>();
+                        pose_boxes[i].keypoint.c = kps[i * 3 + 2].as<float>();
+                    }
+                }
+            }
+
+            if (yolo_box.class_name == "hand") {
+                if (kps.size() == 63) {
+                    for (int i = 0; i < 21; ++i) {
+                        hand_boxes[i].keypoint.x = kps[i * 3].as<float>();
+                        hand_boxes[i].keypoint.y = kps[i * 3 + 1].as<float>();
+                        hand_boxes[i].keypoint.c = kps[i * 3 + 2].as<float>();
+                    }
                 }
             }
 
@@ -428,11 +441,43 @@ void cameraTask(void* pvParameters)
                                          (uint16_t*)CoreS3.Camera.fb->buf);
                 if (yolo_box.frame) {
                     yolo_box.frame--;
+
                     M5.Display.setTextDatum(bottom_left);
-                    M5.Display.drawString(yolo_box.class_name.c_str(), yolo_box.x1, yolo_box.y1);
-                    M5.Display.setTextDatum(bottom_left);
-                    M5.Display.drawFloat(yolo_box.confidence, 2, yolo_box.x2, yolo_box.y1);
-                    M5.Display.drawRect(yolo_box.x1, yolo_box.y1, yolo_box.x2, yolo_box.y2, ORANGE);
+
+                    M5.Display.drawString(yolo_box.class_name.c_str(), yolo_box.x1, yolo_box.y1 - 40);
+                    M5.Display.drawFloat(yolo_box.confidence, 2, yolo_box.x2, yolo_box.y1 - 40);
+
+                    M5.Display.drawRect(yolo_box.x1, yolo_box.y1 - 40, yolo_box.x2, yolo_box.y2 - 40, ORANGE);
+
+                    const int pose_lines[][3] = {
+                        {0, 2, NAVY},      {2, 4, DARKGREEN}, {0, 1, DARKCYAN},   {1, 3, MAROON},
+                        {6, 5, PURPLE},    {6, 8, OLIVE},     {8, 10, LIGHTGREY}, {5, 7, DARKGREY},
+                        {7, 9, BLUE},      {12, 11, GREEN},   {6, 12, CYAN},      {12, 14, RED},
+                        {14, 16, MAGENTA}, {5, 11, YELLOW},   {11, 13, ORANGE},   {13, 15, GREENYELLOW}};
+
+                    const int hand_lines[][3] = {{0, 1, NAVY},         {1, 2, DARKGREEN},     {2, 3, DARKCYAN},
+                                                 {3, 4, MAROON},       {0, 5, PURPLE},        {5, 6, OLIVE},
+                                                 {6, 7, LIGHTGREY},    {7, 8, DARKGREY},      {0, 17, BLUE},
+                                                 {17, 18, GREEN},      {18, 19, CYAN},        {19, 20, RED},
+                                                 {5, 9, MAGENTA},      {9, 13, YELLOW},       {13, 17, ORANGE},
+                                                 {9, 10, GREENYELLOW}, {10, 11, MAGENTA},     {11, 12, YELLOW},
+                                                 {13, 14, ORANGE},     {14, 15, GREENYELLOW}, {15, 16, GREENYELLOW}};
+
+                    if (yolo_box.class_name == "person") {
+                        for (const auto& line : pose_lines) {
+                            M5.Display.drawLine(pose_boxes[line[0]].keypoint.x, pose_boxes[line[0]].keypoint.y - 40,
+                                                pose_boxes[line[1]].keypoint.x, pose_boxes[line[1]].keypoint.y - 40,
+                                                line[2]);
+                        }
+                    }
+
+                    if (yolo_box.class_name == "hand") {
+                        for (const auto& line : hand_lines) {
+                            M5.Display.drawLine(hand_boxes[line[0]].keypoint.x, hand_boxes[line[0]].keypoint.y - 40,
+                                                hand_boxes[line[1]].keypoint.x, hand_boxes[line[1]].keypoint.y - 40,
+                                                line[2]);
+                        }
+                    }
                 }
                 CoreS3.Camera.free();
             }
