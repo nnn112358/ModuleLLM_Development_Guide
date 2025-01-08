@@ -1,4 +1,4 @@
-##　Version情報
+## Version情報
 
 ![image](https://github.com/user-attachments/assets/1a01561d-8c25-4aac-95dd-811c61eb8dfe)
 
