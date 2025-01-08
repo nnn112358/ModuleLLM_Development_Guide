@@ -49,6 +49,19 @@ root@m5stack-LLM:# tree /opt/m5stack/data/depth_anything/
 
  mode_depth_anything.json:https://github.com/m5stack/StackFlow/blob/dev/projects/llm_framework/main_depth_anything/mode_depth_anything.json
 
+```
+openbuddy-llama3.2-1B
+total size=3145728KB(3072MB),used=1300104KB(1269MB + 648KB),remain=1845624KB(1802MB + 376KB),partition_number=1,block_number=388
+
+llm-llama3.2-1B
+total size=3145728KB(3072MB),used=1300068KB(1269MB + 612KB),remain=1845660KB(1802MB + 412KB),partition_number=1,block_number=388
+
+llm-qwen2.5-1.5B
+total size=3145728KB(3072MB),used=1641200KB(1602MB + 752KB),remain=1504528KB(1469MB + 272KB),partition_number=1,block_number=664
+
+llm-qwen2.5-0.5B
+total size=3145728KB(3072MB),used=537356KB(524MB + 780KB),remain=2608372KB(2547MB + 244KB),partition_number=1,block_number=572
+```
 
 
 ===
