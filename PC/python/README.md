@@ -1,4 +1,6 @@
 ## Version情報
+LLM Module Firmware Upgrade https://docs.m5stack.com/en/guide/llm/llm/image
+からdebをダウンロードしてインストールする。
 
 ```
 root@m5stack-LLM:~# dpkg -l | grep llm
