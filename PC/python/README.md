@@ -1,16 +1,19 @@
+##　Version情報
+
+![image](https://github.com/user-attachments/assets/1a01561d-8c25-4aac-95dd-811c61eb8dfe)
+
 ## Depth anything 
+ llm-depth-anything_1.3-m5stack1_arm64.debをインストール後、/opt/m5stack/data/depth_anything/ディレクトリに、
+depth_anything.axmodel、mode_depth_anything.jsonを配置したところ、動くことを確認しました。
 
- /opt/m5stack/data/depth_anything/のディレクトリの下に depth_anything.axmodelとmode_depth_anything.jsonを配置する。
-
- 
 ```
-
 root@m5stack-LLM:# tree /opt/m5stack/data/depth_anything/
 /opt/m5stack/data/depth_anything/
  depth_anything.axmodel
  mode_depth_anything.json
 ````
 
+ mode_depth_anything.json:https://github.com/m5stack/StackFlow/blob/dev/projects/llm_framework/main_depth_anything/mode_depth_anything.json
 
 
 
