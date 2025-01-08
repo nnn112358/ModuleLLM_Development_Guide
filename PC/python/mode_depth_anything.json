@@ -1,0 +1,21 @@
+{
+    "mode":"depth_anything",
+    "type":"cv",
+    "capabilities":[
+        "Segmentation"
+    ],
+    "input_type":[
+        "cv.jpeg.base64"
+    ],
+    "output_type":[
+        "cv.jpeg.base64"
+    ],
+    "mode_param":{
+        "depth_anything_model":"depth_anything.axmodel",
+        "model_type":"segment",
+        "img_h":256,
+        "img_w":384
+    },
+    "mode_param_bak":{
+    }
+}
