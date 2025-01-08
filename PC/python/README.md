@@ -1,3 +1,14 @@
+## Depth anything 
+
+ /opt/m5stack/data/depth_anything/のディレクトリの下に depth_anything.axmodelとmode_depth_anything.jsonを配置する。
+
+ 
+```
+root@m5stack-LLM:# tree /opt/m5stack/data/depth_anything/
+/opt/m5stack/data/depth_anything/
+ depth_anything.axmodel
+ mode_depth_anything.json
+````
 
 
 
