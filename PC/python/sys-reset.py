@@ -1,5 +1,6 @@
 import socket
 import json
+import argparse
 
 def receive_full_data(sock):
     data = b''
@@ -60,6 +61,10 @@ def main(host, port):
         client_socket.close()
 
 if __name__ == '__main__':
-    host = "192.168.20.8"  # サーバーのIPアドレス
-    port = 10001           # サーバーのポート番号
-    main(host, port)
+    parser = argparse.ArgumentParser(description='TCP Client to send JSON data.')
+    #parser.add_argument('--host', type=str, default='localhost', help='Server hostname (default: localhost)')
+    parser.add_argument('--host', type=str, default='m5stack-LLM.local', help='Server hostname (default: m5stack-LLM.local)')
+    parser.add_argument('--port', type=int, default=10001, help='Server port (default: 10001)')
+
+    args = parser.parse_args()
+    main(args.host, args.port)

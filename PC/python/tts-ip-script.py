@@ -5,6 +5,7 @@ import time
 import subprocess
 import os
 from pathlib import Path
+import argparse
 
 def get_wifi_ip():
     """Wi-Fi IPアドレスをサブプロセスを使用して取得"""
@@ -37,7 +38,7 @@ def receive_response(sock):
         print(f'レスポンス受信エラー: {e}')
     return None
 
-def main():
+def main(host, port):
     os.chdir(Path(__file__).parent)
     
     wifi_ip = get_wifi_ip()
@@ -47,9 +48,9 @@ def main():
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-        server_address = ('192.168.20.8', 10001)
-        client_socket.connect(server_address)
-        print(f'サーバー {server_address[0]}:{server_address[1]} に接続しました')
+        client_socket.connect((host, port))
+
+        print(f'サーバー {host}:{port} に接続しました')
 
         # オーディオセットアップ
         audio_setup = {
@@ -101,13 +102,13 @@ def main():
         time.sleep(5)
         
         # リセット
-#        reset_request = {
-#            "request_id": "4",
-#            "work_id": "sys",
-#            "action": "reset"
-#        }
-#        send_json_request(client_socket, reset_request)
-#        receive_response(client_socket)
+        reset_request = {
+            "request_id": "4",
+            "work_id": "sys",
+            "action": "reset"
+        }
+        send_json_request(client_socket, reset_request)
+        receive_response(client_socket)
 
     except Exception as e:
         print(f'エラー: {e}')
@@ -115,4 +116,10 @@ def main():
         client_socket.close()
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='TCP Client to send JSON data.')
+    #parser.add_argument('--host', type=str, default='localhost', help='Server hostname (default: localhost)')
+    parser.add_argument('--host', type=str, default='m5stack-LLM.local', help='Server hostname (default: m5stack-LLM.local)')
+    parser.add_argument('--port', type=int, default=10001, help='Server port (default: 10001)')
+
+    args = parser.parse_args()
+    main(args.host, args.port)

@@ -3,6 +3,7 @@ import json
 import base64
 import cv2
 import numpy as np
+import argparse
 
 def receive_full_data(sock):
     data = b''
@@ -125,6 +126,10 @@ def main(host, port):
         cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    host = "192.168.20.104"
-    port = 10001
-    main(host, port)
+    parser = argparse.ArgumentParser(description='TCP Client to send JSON data.')
+    #parser.add_argument('--host', type=str, default='localhost', help='Server hostname (default: localhost)')
+    parser.add_argument('--host', type=str, default='m5stack-LLM.local', help='Server hostname (default: m5stack-LLM.local)')
+    parser.add_argument('--port', type=int, default=10001, help='Server port (default: 10001)')
+
+    args = parser.parse_args()
+    main(args.host, args.port)
