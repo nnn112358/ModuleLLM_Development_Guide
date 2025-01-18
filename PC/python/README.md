@@ -1,3 +1,14 @@
+## How to 
+
+Module-LLMと同じネットワークに接続して、Pythonスクリプトを実行します。
+--hostの後にModule-LLMのIPアドレスを指定します。
+
+```
+$ python llm-qwen2.5-1.5B.py --host 192.168.20.24
+```
+
+
+
 ## Version情報
 LLM Module Firmware Upgrade https://docs.m5stack.com/en/guide/llm/llm/image
 からdebをダウンロードしてインストールする。
