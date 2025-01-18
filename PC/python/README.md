@@ -1,5 +1,5 @@
 ## overview
-Module-LLMのStackFlowのAPIへ、PCのPythonからアクセスするサンプル。<br>
+Module-LLMのStackFlowサービスのAPIを使って、PCのPythonからStackFlowサービスにアクセスするサンプル。<br>
 
 Original Script is <br>
 Abandon-ht/ModuleLLM_Development_Guide https://github.com/Abandon-ht/ModuleLLM_Development_Guide  <br>
