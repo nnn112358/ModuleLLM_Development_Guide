@@ -55,10 +55,10 @@ python  sys-reset.py
 # LLMサービスがリセットされます。
 
 python melotts-script.py  
-# melottsで音声合成します。音が出ないときがあり、調査中。(ArduinoのTTSサンプルを実行した後は確実に音が出る)
+# melottsで音声合成します。
 
 python tts-ip-script.py
-# melottsで音声合成します。音が出ないときがあり、調査中。(ArduinoのTTSサンプルを実行した後は確実に音が出る)
+# melottsで音声合成します。
 
 python depth_anything.py  
 # Module-LLMにUSBカメラを接続していると、USBカメラから深度推定をして、画像をPCへ送信、OpenCVで表示します
