@@ -14,7 +14,7 @@ Setup LLM...
 ## Version情報
 LLM Module Firmware Upgrade https://docs.m5stack.com/en/guide/llm/llm/image
 からdebをダウンロードしてインストールする。
-
+インストールしてある,LLMのサービスは以下で確認します。
 ```
 root@m5stack-LLM:~# dpkg -l | grep llm
 ii  lib-llm                                                   1.4                                     arm64        llm-module
