@@ -8,6 +8,7 @@ https://docs.m5stack.com/en/guide/llm/llm630_compute_kit/stackflow<br>
 ## How to 
 
 Module-LLMと同じネットワークに接続して、Pythonスクリプトを実行します。<br>
+また、Module-LLMから、Pythonスクリプトを実行することも可能です。<br>
 --hostの後にModule-LLMのIPアドレスを指定します。<br>
 --hostの後に指定がない場合は、Module-LLMはDNSでm5stack-LLM.localのホスト名が割り振られますので、m5stack-LLM.localにアクセスするようにしています。<br>
 Pythonスクリプトの中の promptで、返信するキャラクターが変わるので、好きに書き換えてみましょう。<br>
