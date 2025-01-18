@@ -3,7 +3,7 @@ Module-LLMのStackFlowのAPIへ、PCのPythonからアクセスするサンプ�
 
 Original Script is <br>
 Abandon-ht/ModuleLLM_Development_Guide https://github.com/Abandon-ht/ModuleLLM_Development_Guide  <br>
-
+https://docs.m5stack.com/en/guide/llm/llm630_compute_kit/stackflow<br>
 
 ## How to 
 
