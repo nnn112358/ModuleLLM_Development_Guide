@@ -1,3 +1,10 @@
+## overview
+Module-LLMのStackFlowのAPIへ、PCのPythonからアクセスするサンプル。<br>
+
+Original Script is <br>
+Abandon-ht/ModuleLLM_Development_Guide https://github.com/Abandon-ht/ModuleLLM_Development_Guide  <br>
+
+
 ## How to 
 
 Module-LLMと同じネットワークに接続して、Pythonスクリプトを実行します。<br>
