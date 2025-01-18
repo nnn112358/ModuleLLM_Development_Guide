@@ -42,6 +42,10 @@ def main(host, port):
     os.chdir(Path(__file__).parent)
     
     wifi_ip = get_wifi_ip()
+
+    print( f"Wi-Fi IP Address is {wifi_ip}")
+
+
     if not wifi_ip:
         print("Wi-Fi IPアドレスが見つかりません")
         return
@@ -54,7 +58,7 @@ def main(host, port):
 
         # オーディオセットアップ
         audio_setup = {
-            "request_id": "1",
+            "request_id": "audio_setup",
             "work_id": "audio",
             "action": "setup",
             "object": "audio.setup",
@@ -64,7 +68,7 @@ def main(host, port):
                 "capVolume": 0.5,
                 "playcard": 0,
                 "playdevice": 1,
-                "playVolume": 0.8
+                "playVolume": 0.15
             }
         }
         send_json_request(client_socket, audio_setup)
@@ -72,13 +76,13 @@ def main(host, port):
 
         # TTSセットアップ
         tts_setup = {
-            "request_id": "2",
+            "request_id": "tts_setup",
             "work_id": "tts",
             "action": "setup",
             "object": "tts.setup",
             "data": {
                 "model": "single_speaker_english_fast",
-                "response_format": "tts.base64.wav",
+                "response_format": "sys.pcm",
                 "input": "tts.utf-8.stream",
                 "enoutput": False,
                 "enaudio": True,
@@ -90,11 +94,17 @@ def main(host, port):
 
         # TTS推論
         inference_request = {
-            "request_id": "3",
+            "request_id": "tts_inference",
             "work_id": "tts.1001",
             "action": "inference",
-            "object": "tts.utf-8",
-            "data": f"Wi-Fi IP Address is {wifi_ip}"
+            "object": "tts.utf-8.stream",
+#            "data": f"Wi-Fi IP Address is {wifi_ip}"
+            "data": {
+                "delta": f"Wi-Fi IP Address is {wifi_ip}",
+                "index": 0,
+                "finish": True
+            }
+
         }
         send_json_request(client_socket, inference_request)
         receive_response(client_socket)
@@ -103,9 +113,9 @@ def main(host, port):
         
         # リセット
         reset_request = {
-            "request_id": "4",
-            "work_id": "sys",
-            "action": "reset"
+            "request_id": "tts_exit",
+            "work_id": "tts.1002",
+            "action": "exit"
         }
         send_json_request(client_socket, reset_request)
         receive_response(client_socket)
