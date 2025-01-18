@@ -2,10 +2,11 @@
 
 Module-LLMと同じネットワークに接続して、Pythonスクリプトを実行します。<br>
 --hostの後にModule-LLMのIPアドレスを指定します。<br>
---hostの後に指定がない場合は、デフォルトのDNSで割り振られる、m5stack-LLM.localにアクセスします。<br>
+--hostの後に指定がない場合は、Module-LLMはDNSでm5stack-LLM.localのホスト名が割り振られますので、m5stack-LLM.localにアクセスするようにしています。<br>
+
 
 ```
-$ python llm-qwen2.5-0.5B.py --host 192.168.20.24
+$ python llm-qwen2.5-0.5B.py --host m5stack-LLM.local(or 192.168.1.10)
 Setup LLM...
 Setup LLM finished.
 Enter your message (or 'exit' to quit): こんにちは
