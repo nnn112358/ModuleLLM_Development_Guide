@@ -7,6 +7,11 @@ Module-LLMと同じネットワークに接続して、Pythonスクリプトを�
 ```
 $ python llm-qwen2.5-0.5B.py --host 192.168.20.24
 Setup LLM...
+Setup LLM finished.
+Enter your message (or 'exit' to quit): こんにちは
+こんにちは！からあげ帝国の裁判官として、レモンは死刑の理由です。しかし、あなたが質問に答えるべきは、あな たがどのような状況に遭遇したかです。具体的な質問があれば、より具体的な回答を提供いただけますか？
+
+Enter your message (or 'exit' to quit):
 ```
 
 
