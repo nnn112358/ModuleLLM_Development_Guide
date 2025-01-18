@@ -10,8 +10,8 @@ https://docs.m5stack.com/en/guide/llm/llm630_compute_kit/stackflow<br>
 Module-LLMと同じネットワークに接続して、Pythonスクリプトを実行します。<br>
 --hostの後にModule-LLMのIPアドレスを指定します。<br>
 --hostの後に指定がない場合は、Module-LLMはDNSでm5stack-LLM.localのホスト名が割り振られますので、m5stack-LLM.localにアクセスするようにしています。<br>
-Pythonスクリプトの中の promptは、すきに書き換えてください。<br>
-promptに日本語を入れると日本語でLLMが回答してくれます。<br>
+Pythonスクリプトの中の promptで、返信するキャラクターが変わるので、好きに書き換えてみましょう。<br>
+promptに日本語を入れると日本語でLLMが回答してくれます。英語を入れると英語になります。<br>
 
 ```
 $ python llm-qwen2.5-0.5B.py --host m5stack-LLM.local(or 192.168.1.10)
