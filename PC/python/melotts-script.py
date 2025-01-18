@@ -53,7 +53,7 @@ def main(host, port):
 
         # オーディオセットアップ
         audio_setup = {
-            "request_id": "1",
+            "request_id": "audio_setup",
             "work_id": "audio",
             "action": "setup",
             "object": "audio.setup",
@@ -63,7 +63,7 @@ def main(host, port):
                 "capVolume": 0.5,
                 "playcard": 0,
                 "playdevice": 1,
-                "playVolume": 0.5
+                "playVolume": 0.15
             }
         }
         send_json_request(client_socket, audio_setup)
@@ -71,14 +71,14 @@ def main(host, port):
 
         # TTSセットアップ
         tts_setup = {
-            "request_id": "2",
+            "request_id": "melotts_setup",
             "work_id": "melotts",
             "action": "setup",
             "object": "melotts.setup",
             "data": {
                 "model": "melotts_zh-cn",
                 "response_format": "sys.pcm",
-                "input": "tts.utf-8.stream",
+                "input": ["tts.utf-8.stream"],  # 配列に修正
                 "enoutput": False,
                 "enaudio": True
             }
@@ -88,11 +88,15 @@ def main(host, port):
 
         # TTS推論
         inference_request = {
-            "request_id": "3",
+            "request_id": "tts_inference",
             "work_id": "melotts.1001",  # work_idを修正
             "action": "inference",
-            "object": "tts.utf-8",
-            "data": "Hello I am Stack chan."
+            "object":  "tts.utf-8.stream",
+            "data": {
+                "delta": "Hello I am Stack chan.",
+                "index": 0,
+                "finish": True
+            }
         }
         send_json_request(client_socket, inference_request)
         receive_response(client_socket)
