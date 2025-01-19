@@ -4,7 +4,7 @@ Module-LLMのStackFlowサービスのAPIを使って、PCのPythonからStackFlo
 Original Script is <br>
 Abandon-ht/ModuleLLM_Development_Guide https://github.com/Abandon-ht/ModuleLLM_Development_Guide  <br>
 https://docs.m5stack.com/en/guide/llm/llm630_compute_kit/stackflow<br>
-
+## Pre
 ## How to 
 
 Module-LLMと同じネットワークに接続して、Pythonスクリプトを実行します。<br>
@@ -58,7 +58,7 @@ python melotts-script.py
 # melottsで音声合成します。
 
 python tts-ip-script.py
-# melottsで音声合成します。
+# ttsで音声合成します。
 
 python depth_anything.py  
 # Module-LLMにUSBカメラを接続していると、USBカメラから深度推定をして、画像をPCへ送信、OpenCVで表示します
