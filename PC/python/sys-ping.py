@@ -2,71 +2,43 @@ import socket
 import json
 import argparse
 
-def receive_full_data(sock):
-    data = b''
-    while True:
-        packet = sock.recv(4096)
-        if not packet:
-            break
-        data += packet
-
-        if b'\n' in data:
-            break
-
-    return data.split(b'\n')
-
 def main(host, port):
-    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        client_socket.connect((host, port))
-        print(f'Connected to server at {host}:{port}')
-
-        # ping リクエストデータ
-        ping_json_data = {
-            "request_id": "sys_ping",
-            "work_id": "sys",
-            "action": "ping",
-            "object": "None",
-            "data": "None"
-        }
-        
-        # JSONデータの送信
-        json_string = json.dumps(ping_json_data)
-        client_socket.sendall(f"{len(json_string):<10}".encode('utf-8'))
-        client_socket.sendall(json_string.encode('utf-8'))
-        print(f'Sent ping request: {json_string}')
-
-        # レスポンスの受信と表示
-        while True:
-            data_packets = receive_full_data(client_socket)
-            if not data_packets:
-                print("No more data from server, closing connection...")
-                break
-
-            for data in data_packets:
-                if not data:
-                    continue
-
-                try:
-                    response = data.decode("utf-8")
-                    print(f'Received response: {response}')
-                    json_data = json.loads(response)
-                    print("Ping response:", json.dumps(json_data, indent=2))
-                    return  # 応答を受け取ったら終了
-
-                except json.JSONDecodeError as e:
-                    print(f'Error parsing JSON: {e}')
-                except Exception as e:
-                    print(f'Unexpected error: {e}')
-
-    finally:
-        client_socket.close()
+   with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
+       # サーバー接続
+       client.connect((host, port))
+       print(f'Connected to {host}:{port}')
+       
+       # リクエストデータ作成
+       request = {
+           "request_id": "sys_ping",
+           "work_id": "sys",
+           "action": "ping",
+           "object": "None",
+           "data": "None"
+       }
+       
+       # データ送信
+       json_str = json.dumps(request)
+       client.sendall(f"{len(json_str):<10}".encode() + json_str.encode())
+       print(f'\nSent ping:\n{json.dumps(request, indent=2)}')
+       
+       # レスポンス受信
+       response = b''
+       while b'\n' not in response:
+           chunk = client.recv(4096)
+           if not chunk:
+               break
+           response += chunk
+           
+       # 結果表示
+       print(f'\nReceived pong:\n{json.dumps(json.loads(response.decode()), indent=2)}')
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='TCP Client to send JSON data.')
-    #parser.add_argument('--host', type=str, default='localhost', help='Server hostname (default: localhost)')
-    parser.add_argument('--host', type=str, default='m5stack-LLM.local', help='Server hostname (default: m5stack-LLM.local)')
-    parser.add_argument('--port', type=int, default=10001, help='Server port (default: 10001)')
+   parser = argparse.ArgumentParser()
+   parser.add_argument('--host', default='localhost')
+   parser.add_argument('--port', type=int, default=10001)
+   args = parser.parse_args()
+   
+   main(args.host, args.port)
 
-    args = parser.parse_args()
-    main(args.host, args.port)
+

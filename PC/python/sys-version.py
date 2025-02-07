@@ -8,17 +8,17 @@ def main(host, port):
        client.connect((host, port))
        print(f'Connected to {host}:{port}')
        
-       # リクエストデータ作成
+       # リクエストデータ作成 
        request = {
-           "request_id": "sys_reboot",
-           "work_id": "sys",
-           "action": "reboot"
+           "request_id": "sys_version",
+           "work_id": "sys", 
+           "action": "version"
        }
        
        # データ送信
        json_str = json.dumps(request)
        client.sendall(f"{len(json_str):<10}".encode() + json_str.encode())
-       print(f'\nSent reboot request:\n{json.dumps(request, indent=2)}')
+       print(f'\nSent request:\n{json.dumps(request, indent=2)}')
        
        # レスポンス受信
        response = b''
@@ -29,11 +29,11 @@ def main(host, port):
            response += chunk
            
        # 結果表示
-       print(f'\nReboot response:\n{json.dumps(json.loads(response.decode()), indent=2)}')
+       print(f'\nSystem modes:\n{json.dumps(json.loads(response.decode()), indent=2)}')
 
 if __name__ == '__main__':
    parser = argparse.ArgumentParser()
-    parser.add_argument('--host', default='localhost')
+   parser.add_argument('--host', default='localhost')
    parser.add_argument('--port', type=int, default=10001)
    args = parser.parse_args()
    
