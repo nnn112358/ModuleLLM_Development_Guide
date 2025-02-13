@@ -25,12 +25,14 @@ https://github.com/m5stack/M5Module-LLM/tree/dev
  * #define Serial USBSerial  を消す。 ArduinoIDEでは不要。<br>
  https://github.com/Abandon-ht/ModuleLLM_Development_Guide/blob/dev/ESP32/cpp/src/yolo11n.cpp#L32
  
- *char jsonBuffer[JSON_BUFFER_SIZE]; がライブラリで名前が干渉しているとエラー。　jsonBuffer->_jsonBuffer　に変更。
+ *char jsonBuffer[JSON_BUFFER_SIZE]; がライブラリで名前が干渉しているとエラー。　jsonBuffer->_jsonBuffer　に変更。<br>
+ https://github.com/Abandon-ht/ModuleLLM_Development_Guide/blob/dev/ESP32/cpp/src/yolo11n.cpp#L113
  
- * VLMを動かすには、DualButtonを買ってPortBにさす。
- * YOLOを動かすにはCoreS3を使う。カメラが必要。
- * 
+
 ### 動作の様子:
+ * YOLOを動かすにはCoreS3を使う。カメラが必要。<br>
+ * VLMを動かすには、DualButtonを買ってPortBにさす。<br>
+ * Module-LLM側にYOLOモデルのdebパッケージインストールが必要。
 https://x.com/nnn112358/status/1885479805417906567<br>
 https://x.com/nnn112358/status/1880573851526107537<br>
 
