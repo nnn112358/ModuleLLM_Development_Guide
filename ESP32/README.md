@@ -4,8 +4,10 @@ M5CoreS3を購入し、YOLOのカメラサンプル(ESP32/cpp/src/yolo11n.cpp)�
 試してみたところ、不具合あり。(25/01/18)<br>
 以下を対処して動いた。(2/1)
 
- * NG：VSCode+PlatformIOでのビルドの実行→M5ModuleLLMのバージョンが古いことでのコンパイルエラー発生。
+### 最初
+NG：VSCode+PlatformIOでのビルドの実行→M5ModuleLLMのバージョンが古いことでのコンパイルエラー発生。
 
+### 対処:
  * https://github.com/Abandon-ht/ModuleLLM_Development_Guide/tree/dev　から、ファイルを一式ダウンロード
  * ライブラリ M5ModuleLLMのバージョンが古い -> M5Stack のdevバージョンを参照する (https://github.com/m5stack/M5Module-LLM/tree/dev)
  * PlatformIOでビルドするとCoreS3がクラッシュし続ける
