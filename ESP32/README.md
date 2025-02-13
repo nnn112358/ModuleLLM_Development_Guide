@@ -18,7 +18,9 @@ NG：VSCode+PlatformIOでのビルドの実行→M5ModuleLLMのバージョン�
  
  * #define Serial USBSerial  を消す。 ArduinoIDEでは不要。
  * https://github.com/Abandon-ht/ModuleLLM_Development_Guide/blob/dev/ESP32/cpp/src/yolo11n.cpp#L32
-   
+ 
+ *char jsonBuffer[JSON_BUFFER_SIZE]; がライブラリで名前が干渉しているとエラー。　jsonBuffer->_jsonBuffer　に変更。
+ 
  * VLMを動かすには、DualButtonを買ってPortBにさす。
  * YOLOを動かすにはCoreS3を使う。カメラが必要。
 https://x.com/nnn112358/status/1885479805417906567
