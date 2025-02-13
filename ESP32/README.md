@@ -9,15 +9,17 @@ NG：VSCode+PlatformIOでのビルドの実行→M5ModuleLLMのバージョン�
 
 ### 対処:
  * (https://github.com/Abandon-ht/ModuleLLM_Development_Guide/tree/dev) から、ファイルを一式ダウンロード
- * ライブラリ M5ModuleLLMのバージョンが古い -> M5Stack のdevバージョンを参照する (https://github.com/m5stack/M5Module-LLM/tree/dev)
- * PlatformIOでビルドするとCoreS3がクラッシュし続ける
+   
+ * ライブラリ M5ModuleLLMのバージョンでのエラーが発生 -> M5Stack リポジトリのdevバージョンを参照する<br>
+https://github.com/m5stack/M5Module-LLM/tree/dev
+ * PlatformIOでビルドするとCoreS3がクラッシュし続ける<br>
    おそらく、パーティションテーブルの問題。.cppファイルを.inoファイルに修正し、ArduinoIDEを使ってコンパイルすることで回避。
 
- * シリアルポートのボーレートを修正する（1500000がある->115200)
- * https://github.com/Abandon-ht/ModuleLLM_Development_Guide/blob/dev/ESP32/cpp/src/yolo11n.cpp#L184
+ * シリアルポートのボーレートを修正する（1500000がある->115200)<br>
+ https://github.com/Abandon-ht/ModuleLLM_Development_Guide/blob/dev/ESP32/cpp/src/yolo11n.cpp#L184
  
- * #define Serial USBSerial  を消す。 ArduinoIDEでは不要。
- * https://github.com/Abandon-ht/ModuleLLM_Development_Guide/blob/dev/ESP32/cpp/src/yolo11n.cpp#L32
+ * #define Serial USBSerial  を消す。 ArduinoIDEでは不要。<br>
+ https://github.com/Abandon-ht/ModuleLLM_Development_Guide/blob/dev/ESP32/cpp/src/yolo11n.cpp#L32
  
  *char jsonBuffer[JSON_BUFFER_SIZE]; がライブラリで名前が干渉しているとエラー。　jsonBuffer->_jsonBuffer　に変更。
  
