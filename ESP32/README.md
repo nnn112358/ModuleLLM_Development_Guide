@@ -23,8 +23,9 @@ NG：VSCode+PlatformIOでのビルドの実行→M5ModuleLLMのバージョン�
  
  * VLMを動かすには、DualButtonを買ってPortBにさす。
  * YOLOを動かすにはCoreS3を使う。カメラが必要。
+ * 
 ### 動作の様子:
-https://x.com/nnn112358/status/1885479805417906567
-https://x.com/nnn112358/status/1880573851526107537
+https://x.com/nnn112358/status/1885479805417906567<br>
+https://x.com/nnn112358/status/1880573851526107537<br>
 
 
