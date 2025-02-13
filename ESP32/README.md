@@ -1,3 +1,7 @@
+# CoreS3+ModuleLLMのYOLO/VLMサンプル
+(https://github.com/Abandon-ht/ModuleLLM_Development_Guide/tree/dev)<br>
+@Abandon-ht:M5Stackの中の方<br>
+
 ## 概要
 
 M5CoreS3を購入し、YOLOのカメラサンプル(ESP32/cpp/src/yolo11n.cpp)を動かしてみましたが、
